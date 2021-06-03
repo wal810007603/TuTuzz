@@ -1,0 +1,187 @@
+package RegularExpression;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class HTMLWeb {
+	public static void main(String[] args) {
+		String data = "";
+		data += "<html><head><title>��ӭ�����人��֯��ѧ��ҳ</title></head></html>";
+		data += "<body><img src='1.jpg'/>";
+		data += "<a href='1.htm'>��ҳ</a>";
+		data += "<a href='2.htm'>����</a>";
+		data += "<a href='3.htm'>����ѧԺ</a>";
+		data += "<img src='2.jpg'/>";
+		data += "<img src='3.jpg'/>";
+		data += "</body></html>";
+
+		Pattern title = Pattern.compile("(<title>)(.*?)(</title>)", Pattern.CASE_INSENSITIVE);
+		Matcher Tit = title.matcher(data);
+
+		Pattern picture = Pattern.compile("(<img)(.*?)(/>)", Pattern.CASE_INSENSITIVE);
+		Matcher Pic = picture.matcher(data);
+
+		Pattern hyper = Pattern.compile("(<a)(.*?)(/a>)", Pattern.CASE_INSENSITIVE);
+		Matcher Hyp = hyper.matcher(data);
+
+		String t = new String();
+		ArrayList<String> p = new ArrayList<String>();
+		ArrayList<String> h = new ArrayList<String>();
+		ArrayList<String> address = new ArrayList<String>();
+		int count_pic = 0;
+		int count_hyp = 0;
+
+		while (Hyp.find()) {
+			count_hyp++;
+			String H = Hyp.group(2);
+			Pattern hyper2 = Pattern.compile("(href=)(\'|\")(.*?)(\'|\")", Pattern.CASE_INSENSITIVE);
+			Matcher Hyper2 = hyper2.matcher(H);
+			Pattern hyper3 = Pattern.compile("(\'>)(.*?)(<)", Pattern.CASE_INSENSITIVE);
+			Matcher Hyper3 = hyper3.matcher(H);
+			if (Hyper2.find()) {
+				address.add(Hyper2.group(3));
+			}
+			if (Hyper3.find()) {
+				h.add(Hyper3.group(2));
+			}
+		}
+		
+		if (Tit.find()) {
+			t = Tit.group(2);
+		}
+
+		while (Pic.find()) {
+			count_pic++;
+			String pp = Pic.group(2);
+			Pattern picture2 = Pattern.compile("(src=)(\'|\")(.*?)(\'|\")");
+			Matcher picture_2 = picture2.matcher(pp);
+			if (picture_2.find()) {
+				p.add(picture_2.group(3));
+			}
+		}
+		
+		System.out.println("��ҳ���⣺" + t);
+		System.out.print("��ҳ�й�" + count_pic + "��ͼƬ���ļ���Ϊ");
+		for (int i = 0; i < p.size(); i++) 
+		{
+			System.out.print(p.get(i) + "  ");
+		}
+		System.out.println("\n��ҳ�а���" + count_hyp 
+				+ "�������ӣ���������Ϣ���£�");
+		System.out.println("����\t\t��ַ");
+		for (int i = 0; i < h.size(); i++) 
+		{
+			System.out.println(h.get(i) + "\t\t" 
+		+ address.get(i));
+		}
+	}
+}
+
+package RegularExpression;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class OperationalExpression {
+
+	public static void main(String[] args) {
+		String express = "add(min(12,3),max(2,sub(2,1)))";
+		String regex = "((add)|(sub)|(max)|(min)|(doubleMe))\\(\\d{1,}(,\\d{1,})?\\)";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(express);
+		String result = express;
+		
+		System.out.println(express);
+		while(m.find()) {
+			String basicExpress = m.group();
+			String ss = calculate(basicExpress);
+//			System.out.println(basicExpress+"="+ss);
+			basicExpress = basicExpress.replaceAll("\\(", "\\\\(");
+			basicExpress = basicExpress.replaceAll("\\)", "\\\\)");
+//			System.out.println("����ʽΪ:"+result);
+			result = result.replaceAll(basicExpress, ss);
+//			System.out.println("�滻��:"+result);
+			m = p.matcher(result);
+		}
+		
+		System.out.println("������:"+express+"="+result);
+	}
+
+
+
+public static String calculate(String express) {
+	int result = 0;
+	
+	int pos1 = express.indexOf("(");
+	
+	String operateCode = express.substring(0, pos1);
+	
+	int pos2, pos3;
+	int number1, number2 = 0;
+	pos3 = express.indexOf(")");
+	
+	if(operateCode.equals("doubleMe")) {
+		String operateNumber = express.substring(pos1+1, pos3);
+		number1 = Integer.parseInt(operateNumber);
+	}
+	
+	else {
+		pos2 = express.indexOf(",");
+		String operateNumber1 = express.substring(pos1+1, pos2);
+		String operateNumber2 = express.substring(pos2+1, pos3);
+		number1 = Integer.parseInt(operateNumber1);
+		number2 = Integer.parseInt(operateNumber2);
+	}
+	
+	switch(operateCode) {
+	case "add": result = number1+number2; break;
+	case "sub": result = number1-number2; break;
+	case "mul": result = number1*number2; break;
+	case "div": result = number1/number2; break;
+	case "max": result = number1>number2?number1:number2; break;
+	case "min": result = number1<number2?number1:number2;break;
+	case "doubleMe": result = number1*2; break;
+	default: System.out.println("error!");
+	}
+	String Res = ""+result;
+	
+	return Res;
+}
+
+}
+package RegularExpression;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class HTMLFont {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		ArrayList<String> name = new ArrayList<String>();
+		ArrayList<String> value = new ArrayList<String>();
+
+		String data = "<font face='Arial Serif' size='10px' color='red' />";
+
+		Pattern p_1 = Pattern.compile("<\s*font\s*([^>]*)\s*>");
+		Matcher m_1 = p_1.matcher(data);
+
+		if (m_1.find()) 
+		{
+			Pattern p_2 = Pattern.compile("([a-z]+)\s*=\s*('(.*?)')", Pattern.CASE_INSENSITIVE);
+			Matcher m_2 = p_2.matcher(m_1.group(1));
+			while (m_2.find()) 
+			{
+				name.add(m_2.group(1));
+				value.add(m_2.group(3));
+			}
+		}
+		for (int i = 0; i < name.size(); i++) 
+		{
+			System.out.println(name.get(i) + ":" + value.get(i));
+		}
+
+	}
+}
