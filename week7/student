@@ -1,1 +1,145 @@
+package STUDENT_LIST;
 
+public class StudentList {
+	private Student list[];
+	private int count;
+	
+	public StudentList(int maxSize) {
+		list = new Student[maxSize];
+		count = 0;
+	}
+	
+	public boolean add(Student stu) {
+		if(stu==null || list.length<=count)
+			return false;
+		list[count] = stu;
+		count++;
+		return true;
+	}
+	
+	public boolean remove(int index) {
+		if(index<0||index>=count)
+			return false;
+		
+//		//������û��Ԫ�أ��򼯺���ֻʣ1��Ԫ��ʱ
+//		if(count==0||index==count-1)
+//			return true;
+		list[index] = null;
+		for(int i=index;i<count-1;i++) {
+			list[i] = list[i+1]; //ǰ�Ƹ���
+		}
+		count--;
+		list[count] = null;
+		return true;
+	}
+	
+	public int indexOf(String id) {
+		for(int i=0;i<list.length&&list[i]!=null;i++) {
+			if(list[i].getId().equals(id))
+				return i;
+		}
+		return -1;
+	}
+	
+	public Student get(int index) {
+		return list[index];
+	}
+	
+	public int getSize() {
+		return count;
+	}
+	
+	public String toString() {
+		String info = "";
+		for(int i=0;i<list.length&&list[i]!=null;i++) {
+			info += list[i].toString() + "\n"; 
+		}
+		return info;
+	}
+}
+
+package STUDENT_LIST;
+
+public class StudentList_Driver {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		StudentList list = new StudentList(10);
+		
+		if(list.add(new Student("1001", "�")))
+			System.out.println("���ӳɹ�!");
+		else System.out.println("����ʧ��!");
+		if(list.add(new Student("1002", "����")))
+			System.out.println("���ӳɹ�!");
+		else System.out.println("����ʧ��!");
+		if(list.add(new Student("1003", "����")))
+			System.out.println("���ӳɹ�!");
+		else System.out.println("����ʧ��!");
+		if(list.add(new Student("1004", "����")))
+			System.out.println("���ӳɹ�!");
+		else System.out.println("����ʧ��!");
+		if(list.add(new Student("1005", "����")))
+			System.out.println("���ӳɹ�!");
+		else System.out.println("����ʧ��!");
+		
+		System.out.print(list.toString());
+		System.out.println("����ѧ��" + list.getSize() + "��" +"\n");
+		
+		int index1 = list.indexOf("1001");
+		if(index1 != -1) {
+			System.out.println("���ҵ���ѧ������Ϣ:");
+			System.out.println(list.get(index1).toString()+"\n");
+		}
+		else
+			System.out.println("δ�ҵ���ѧ������Ϣ!");
+		
+		int index2 = list.indexOf("1003");
+		if(index2 != -1) {
+			if(list.remove(index2))
+				System.out.println("ɾ���ɹ�!");
+			else
+				System.out.println("ɾ��ʧ��!");
+		}
+
+		System.out.print(list.toString());
+		System.out.println("����ѧ��" + list.getSize() + "��" +"\n");
+		
+	}
+
+}
+
+package STUDENT_LIST;
+
+public class Student {
+	private String id;
+	private String name;
+	
+	public Student(String id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + "]";
+	}
+	
+	
+}
