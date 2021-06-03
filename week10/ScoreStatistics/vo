@@ -1,0 +1,239 @@
+package ScoreStatistics.vo;
+
+public class ScoreInfomation {
+	private String id;
+	private String course;
+	private double grade;
+
+	public ScoreInfomation() {
+		super();
+	}
+
+	public ScoreInfomation(String i, String cou, double gra) {
+		super();
+		id = i;
+		course = cou;
+		grade = gra;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getCourse() {
+		return course;
+	}
+
+	public void setCourse(String course) {
+		this.course = course;
+	}
+
+	public double getGrade() {
+		return grade;
+	}
+
+	public void setGrade(double grade) {
+		this.grade = grade;
+	}
+
+	@Override
+	public String toString() {
+		return "ScoreInfomation [ID=" + id + ", Course=" + course + ", Grade=" + grade + "]";
+	}
+}
+
+package ScoreStatistics.vo;
+
+public class StudentInfomation {
+	private String id;
+	private String name;
+	private String gender;
+
+	public StudentInfomation() {
+		super();
+	}
+
+	public StudentInfomation(String i, String na, String gen) {
+		super();
+		id = i;
+		name = na;
+		gender = gen;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String i) {
+		id = i;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String na) {
+		name = na;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gen) {
+		gender = gen;
+	}
+
+	@Override
+	public String toString() {
+		return "StudentInfomation [Id=" + id + ", Name=" + name + ", Gender=" + gender + "]";
+	}
+}
+
+package ScoreStatistics.vo;
+
+public class StudentResult {
+	private String id;
+	private String name;
+	private String gender;
+	private double avg;
+
+	public StudentResult() {
+		super();
+	}
+
+	public StudentResult(String id, String name, String gender, double avg) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.gender = gender;
+		this.avg = avg;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public double getAvg() {
+		return avg;
+	}
+
+	public void setAvg(double avg) {
+		this.avg = avg;
+	}
+
+	@Override
+	public String toString() {
+		String msg = null;
+		msg += this.id + "\t" + this.name + "\t" + this.gender + "\t" + this.avg;
+		return msg;
+	}
+}
+
+package ScoreStatistics.vo;
+
+public class CourseResult {
+	private String Course;
+	private double Avg;
+
+	public CourseResult() {
+		super();
+	}
+
+	public CourseResult(String course, double avg) {
+		super();
+		Course = course;
+		Avg = avg;
+	}
+
+	public String getCourse() {
+		return Course;
+	}
+
+	public void setCourse(String course) {
+		Course = course;
+	}
+
+	public double getAvg() {
+		return Avg;
+	}
+
+	public void setAvg(double avg) {
+		Avg = avg;
+	}
+
+	@Override
+	public String toString() {
+		String msg = null;
+		msg += this.Course + "\t" + this.Avg;
+		return msg;
+	}
+}
+
+package ScoreStatistics.vo;
+
+public class CourseTotal {
+	private String course;
+	private double total;
+	private int num;
+
+	public CourseTotal() {
+		super();
+	}
+
+	public CourseTotal(String cou, double tot, int n) {
+		super();
+		course = cou;
+		total = tot;
+		num = n;
+	}
+
+	public String getCourse() {
+		return course;
+	}
+
+	public void setCourse(String cou) {
+		course = cou;
+	}
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double tot) {
+		total = tot;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int n) {
+		num = n;
+	}
+
+}
