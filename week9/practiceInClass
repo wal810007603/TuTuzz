@@ -1,0 +1,132 @@
+package practiceInClass;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+public class DateTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		/*
+		Date date = new Date();
+		System.out.println(date);
+		
+		Calendar cal = new GregorianCalendar();
+		int year = cal.get(Calendar.YEAR);
+		System.out.println(year);
+		
+		int month = cal.get(Calendar.MONTH);
+		System.out.println(month + 1); //�´�0��ʼ��0-11
+		
+		int week = cal.get(Calendar.DAY_OF_WEEK);
+		StringBuffer weekStr = new StringBuffer("����");
+		switch(week-1) {
+		case 0: weekStr = weekStr.append("��"); break;
+		default: weekStr.append(week-1); break;
+		}
+		System.out.println(weekStr); //1:��ʾ���գ���������-1
+		
+		*/
+		
+		Date date = new Date();
+		
+		System.out.println(date);
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy��MM��dd��"); //��ʽ��ģ��
+		//                                     ����("yyyy/MM/dd hh:mm");
+		String today = df.format(date);
+		System.out.println(today);
+		
+		
+	}
+
+}
+
+package practiceInClass;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+
+import Cash.vo.Product;
+
+public class CashierSystem {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Scanner scan = new Scanner(System.in);
+		System.out.println("***********************��ӭʹ������ϵͳ***********************");
+		System.out.println("������������Ϣ:");
+		System.out.println("����Ϊ����Ʒ����,��Ʒ����,��������  �á�,���ָ���");
+		System.out.println("**********************************************************");
+		
+		String allInfo = "";
+		String nextLine = scan.nextLine();
+		int seq = 0; //��ʼ���
+		int saleTotalNum = 0; //���۱���
+		int saleTotalCount = 0; //��������
+		float saleTotalMoney = 0; //���۽��
+		while(!nextLine.equals("0000")) {
+			String ss[] = nextLine.split(",|��");
+			String name = ss[0];
+			float price = Float.parseFloat(ss[1]);
+			int count = Integer.parseInt(ss[2]);
+			float totalPrice = price*count;
+			String sno = generateSno(String.valueOf(seq));
+			
+			Product product = new Product(sno,name,price,count,totalPrice);
+			allInfo += product.toString() + "\n";
+			nextLine = scan.nextLine();
+			seq++;
+			
+			saleTotalNum++;
+			saleTotalCount += count;
+			saleTotalMoney += totalPrice;
+			
+		}
+			
+			
+		System.out.println("==========================================================");
+		System.out.println("��ˮ��"+"\t\t"+"��Ʒ����"+"\t"+"��Ʒ����"+"\t"+"����"+"\t"+"�ܼ�");
+		System.out.println("==========================================================");
+		System.out.print(allInfo);
+		System.out.println("==========================================================");
+		System.out.println("�ܼ�:" + "\t���۱��� " + saleTotalNum + "\t�������� " + saleTotalCount + "\t���۽�� " + saleTotalMoney);
+		System.out.println("==========================================================");
+			
+		
+			
+	}
+	
+	
+	public static String generateSno(String beforeNo) {
+		String sno = "";
+		//1.��ȡ��ˮ�ŵ�ǰ׺ yyyyMMdd
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd"); //��ʽ��ģ��
+		String dateNum = df.format(new Date());
+		//2.�õ�˳��� beforeNo+1
+		String newNo = String.valueOf(Integer.parseInt(beforeNo)+1);
+		
+		String zero = "";
+		int zeroCount = 4-newNo.length();
+		for(int i=0;i<zeroCount;i++) {
+			zero = "0"+zero;
+		}
+		
+		sno = dateNum + zero + newNo;
+		return sno;
+	}
+
+}
+
+/*
+ơ�ƣ�8��10
+���ϣ�5��3
+��Ȫˮ��1��10
+���棬5��6
+���ӣ�5��3
+�˱��࣬4��3
+*/
